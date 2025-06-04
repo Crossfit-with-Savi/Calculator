@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scientific Calculator</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+
+    .calculator {
+      background: #1c1c1c;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      width: 400px;
+    }
+
+    #display {
+      width: 100%;
+      height: 50px;
+      font-size: 20px;
+      text-align: right;
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: #333;
+      color: white;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .buttons button {
+      padding: 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+
+    .buttons button:hover {
+      background: #0056b3;
+    }
+
+    .buttons button:active {
+      background: #003f7f;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" readonly />
+    <div class="buttons">
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button onclick="append('/')">/</button>
+      <button onclick="append('Math.sqrt(')">√</button>
+
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button onclick="append('*')">×</button>
+      <button onclick="append('Math.pow(')">x^y</button>
+
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button onclick="append('-')">−</button>
+      <button onclick="append('Math.sin(toRadians(')">sin</button>
+
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="append('+')">+</button>
+      <button onclick="append('Math.cos(toRadians(')">cos</button>
+
+      <button onclick="append('Math.tan(toRadians(')">tan</button>
+      <button onclick="append('Math.log(')">log</button>
+      <button onclick="append('Math.exp(')">exp</button>
+      <button onclick="append(')')">)</button>
+      <button onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <script>
+    function append(value) {
+      document.getElementById('display').value += value;
+    }
+
+    function clearDisplay() {
+      document.getElementById('display').value = '';
+    }
+
+    function toRadians(degrees) {
+      return degrees * (Math.PI / 180);
+    }
+
+    function calculate() {
+      try {
+        const expression = document.getElementById('display').value;
+        // Replace "toRadians(...)" with evaluated radians if present
+        const parsed = expression.replace(/toRadians\(([^)]+)\)/g, (_, val) => toRadians(eval(val)));
+        const result = eval(parsed);
+        document.getElementById('display').value = result;
+      } catch (error) {
+        document.getElementById('display').value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>
